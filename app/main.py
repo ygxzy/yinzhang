@@ -30,6 +30,12 @@ app.include_router(seal.router)
 @app.on_event("startup")
 async def startup_event():
     """启动时预加载产线（避免首次请求超时）。"""
+    # 支持通过环境变量跳过产线预加载，便于本地快速 smoke test
+    # 设置 SEAL_SKIP_PRELOAD=1 将跳过加载重模型依赖（例如 PaddleX）
+    if os.environ.get("SEAL_SKIP_PRELOAD", "0") in ("1", "true", "True"):
+        print("[startup] 跳过产线预加载（SEAL_SKIP_PRELOAD=1）")
+        return
+
     from app.core.pipeline import get_seal_pipeline
     get_seal_pipeline()
 

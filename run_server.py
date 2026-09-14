@@ -10,6 +10,8 @@ os.chdir(PROJECT_ROOT)
 
 # 设置环境变量
 os.environ.setdefault("SEAL_CONFIG_PATH", os.path.join(PROJECT_ROOT, "config.yaml"))
+os.environ.setdefault("SEAL_DEVICE", "gpu")
+os.environ.setdefault("PADDLE_PDX_CACHE_DIR", os.path.join(PROJECT_ROOT, "models"))
 
 if __name__ == "__main__":
     import uvicorn

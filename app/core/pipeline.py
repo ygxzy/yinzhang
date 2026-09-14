@@ -5,7 +5,7 @@ import yaml
 from functools import lru_cache
 from typing import Optional
 
-from paddlex import create_pipeline
+# 延迟导入 paddlex（避免在模块加载时引入大型本地依赖，如 OpenCV）
 
 
 @lru_cache(maxsize=1)
@@ -15,8 +15,19 @@ def get_seal_pipeline():
     PaddleOCR 产线底层 C++ 引擎不是线程安全的，必须进程级单例。
     uvicorn 多 worker 部署时，每个 worker 各加载一份。
     """
-    print("[pipeline] 加载 seal_recognition 产线 ...")
-    pipeline = create_pipeline("seal_recognition")
+    # 延迟导入，只有在实际需要加载产线时才导入 paddlex
+    from paddlex import create_pipeline
+
+    device = os.environ.get("SEAL_DEVICE", "gpu").lower()
+    print(f"[pipeline] 加载 seal_recognition 产线 (device={device}) ...")
+    try:
+        pipeline = create_pipeline("seal_recognition", device=device)
+    except Exception as exc:
+        if device == "gpu":
+            print(f"[pipeline] GPU 初始化失败，回退到 CPU：{exc}")
+            pipeline = create_pipeline("seal_recognition", device="cpu")
+        else:
+            raise
     print("[pipeline] 产线加载完成")
     return pipeline
 

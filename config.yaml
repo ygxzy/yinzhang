@@ -3,6 +3,10 @@
 # 基于 PaddleOCR seal_recognition 产线，内置弯曲矫正
 # 支持输入：图片（jpg/png/webp）+ PDF（逐页渲染）
 
+runtime:
+  device: "gpu"                         # 默认使用 GPU；如无 GPU，可改为 cpu
+  model_dir: "./models"                # 官方模型缓存目录，后续下载模型放在这里
+
 # 输入输出路径
 paths:
   image: "data/image.png"               # 默认输入（图片或 PDF）
