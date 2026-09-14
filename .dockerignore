@@ -1,0 +1,31 @@
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 输出目录（运行时生成）
+output*/
+output_seal*/
+output_seal1*/
+
+# 测试与调试脚本
+test_api.py
+debug_*.py
+demo/
+
+# 模型转换相关（部署不需要）
+onnx_convert/
+
+# 旧版/混合版脚本
+seal_pipeline_hybrid.py
+
+# 文档与计划
+*.md
+plan.md
+deploy_plan.md
+
+# 本地虚拟环境
+.venv/
+venv/
+
+# 数据文件（可选，按需保留）
+data/

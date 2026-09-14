@@ -1,0 +1,24 @@
+# 印章识别服务配置文件（产线模式）
+# ==================================
+# 基于 PaddleOCR seal_recognition 产线，内置弯曲矫正
+# 支持输入：图片（jpg/png/webp）+ PDF（逐页渲染）
+
+# 输入输出路径
+paths:
+  image: "data/image.png"               # 默认输入（图片或 PDF）
+  output_dir: "./output_seal"           # 输出目录（可视化 + 结果 json）
+
+# PDF 渲染参数（处理 PDF 时用）
+pdf:
+  render_dpi: 200                        # 渲染 DPI，印章建议 200+（默认 150 太小会漏字）
+
+# 印章检测参数（产线级，官方标准配置，勿乱改）
+seal_detection:
+  use_doc_orientation_classify: false   # 印章不能矫正，会异位
+  use_doc_unwarping: false             # 同上
+  seal_det_unclip_ratio: 0.5            # 文本框扩张系数
+  seal_det_box_thresh: 0.6              # 框内平均分阈值
+  seal_det_thresh: 0.2                  # 像素阈值
+  seal_det_limit_side_len: 736          # 边长限制
+  seal_det_limit_type: "min"            # 短边限制
+  seal_rec_score_thresh: 0              # 识别分数阈值，全保留业务侧再过滤

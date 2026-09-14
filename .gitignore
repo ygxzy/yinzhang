@@ -1,0 +1,8 @@
+output*/
+*.docx
+*.pdf
+demo/
+paddl*/
+pdmodel*/
+__pycache__/
+onnx*/

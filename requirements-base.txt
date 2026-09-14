@@ -1,0 +1,14 @@
+# 通用依赖（CPU/GPU 共用）
+# Web 框架
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6      # UploadFile 需要
+
+# PDF 渲染
+pypdfium2>=4.0.0
+
+# 图像处理
+pillow>=10.0.0
+
+# 配置
+pyyaml>=6.0

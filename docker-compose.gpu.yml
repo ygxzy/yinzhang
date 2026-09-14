@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  seal-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.gpu
+    container_name: seal-api-gpu
+    ports:
+      - "8000:8000"
+    environment:
+      - SEAL_CONFIG_PATH=/app/config.yaml
+      - WORKERS=2
+    volumes:
+      - seal-models-gpu:/root/.paddlex
+      - ./output_seal:/app/output_seal
+    restart: unless-stopped
+    # GPU 部署
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  seal-models-gpu:

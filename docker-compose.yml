@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  seal-api:
+    # CPU 版本（默认）
+    # 切换 GPU：改为 build: context: . dockerfile: Dockerfile.gpu
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: seal-api
+    ports:
+      - "8000:8000"
+    environment:
+      - SEAL_CONFIG_PATH=/app/config.yaml
+      - WORKERS=2
+    volumes:
+      # 模型缓存（避免每次重启重新下载）
+      - seal-models:/root/.paddlex
+      # 输出目录（可选，方便查看可视化图）
+      - ./output_seal:/app/output_seal
+    restart: unless-stopped
+    # CPU 部署
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+
+volumes:
+  seal-models:

@@ -1,0 +1,10 @@
+# CPU 版本依赖
+# 使用：docker build -f Dockerfile --build-arg TARGET=cpu .
+-r requirements-base.txt
+
+# PaddlePaddle CPU 版（固定 3.1.1，避免 3.2.0 的 DLL 问题）
+paddlepaddle==3.1.1
+
+# PaddleOCR + PaddleX
+paddleocr>=3.6.0
+paddlex[ocr]==3.3.13
